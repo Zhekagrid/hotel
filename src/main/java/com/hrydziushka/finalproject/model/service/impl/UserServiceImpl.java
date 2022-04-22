@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> authenticate(String login, String password) throws ServiceException {
-        // TODO:   validate pass +md5
+        // TODO:   validate pass + encode
 
         boolean match = false;
         try {
