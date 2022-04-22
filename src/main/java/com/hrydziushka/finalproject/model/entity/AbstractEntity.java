@@ -1,13 +1,21 @@
 package com.hrydziushka.finalproject.model.entity;
 
 public class AbstractEntity {
-    private int id;
+    private Long id;
 
-    public AbstractEntity(int id) {
+    public AbstractEntity(Long id) {
         this.id = id;
     }
 
     public AbstractEntity() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override
@@ -17,27 +25,11 @@ public class AbstractEntity {
 
         AbstractEntity that = (AbstractEntity) o;
 
-        return getId() == that.getId();
+        return getId() != null ? getId().equals(that.getId()) : that.getId() == null;
     }
 
     @Override
     public int hashCode() {
-        return getId();
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer("AbstractEntity{");
-        sb.append("id=").append(id);
-        sb.append('}');
-        return sb.toString();
-    }
-
-    public void setId(int id) {
-        this.id = id;
+        return getId() != null ? getId().hashCode() : 0;
     }
 }

@@ -1,19 +1,26 @@
 package com.hrydziushka.finalproject.model.dao.impl;
 
+import com.hrydziushka.finalproject.exception.DaoException;
 import com.hrydziushka.finalproject.model.dao.BaseDao;
 import com.hrydziushka.finalproject.model.dao.UserDao;
 import com.hrydziushka.finalproject.model.entity.User;
-import com.hrydziushka.finalproject.exception.DaoException;
 import com.hrydziushka.finalproject.model.pool.ConnectionPool;
+import com.hrydziushka.finalproject.util.PasswordEncryptor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public class UserDaoImpl implements BaseDao<User>, UserDao {
-    public static final String SELECT_LOGIN_PASSWORD_FROM_USERS_WHERE_LOGIN = "SELECT login, password FROM users WHERE login=?";
+    public static final String SELECT_LOGIN_PASSWORD_FROM_USERS_WHERE_LOGIN = """
+            SELECT user_id, login, password, email, phone_number, balance, status, role
+            FROM users JOIN  roles USING(role_id)
+            JOIN statuses USING (status_id)
+            WHERE login=?""";
+
     private static UserDaoImpl instance = new UserDaoImpl();
 
     private UserDaoImpl() {
@@ -45,56 +52,35 @@ public class UserDaoImpl implements BaseDao<User>, UserDao {
     }
 
     @Override
-    public boolean authenticate(String login, String password) throws DaoException {
-//        try {
-//            DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-//        } catch (SQLException e) {
-//          throw new DaoException(e);
-//        }
-//        String url = "com.mysql.cj.jdbc.Driver";
-//        Properties prop = new Properties();
-//        prop.put("user", "root");
-//        prop.put("password", "Root_123");
-//
-//        boolean match = false;
-//        try (Connection connection = DriverManager.getConnection(url, prop);
-//             PreparedStatement statement = connection.prepareStatement(SELECT_LOGIN_PASSWORD_FROM_PHONEBOOK_WHERE_LOGIN)) {
-//            String passFromDb;
-//
-//            statement.setString(1, login);
-//            ResultSet resultSet = statement.executeQuery();
-//            if (resultSet.next()) {
-//                passFromDb = resultSet.getString(2);
-//                System.out.println(passFromDb);
-//                match = password.equals(passFromDb);
-//            }
-//
-//        } catch (SQLException e) {
-//
-//            throw new DaoException("sql authenticate failed",e);
-//        }
+    public Optional<User> authenticate(String login, String password) throws DaoException {
+
+        Optional<User> optionalUser = Optional.empty();
 
 
-        boolean match = false;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(SELECT_LOGIN_PASSWORD_FROM_USERS_WHERE_LOGIN);) {
-
-
-            String passFromDb;
+             PreparedStatement statement = connection.prepareStatement(SELECT_LOGIN_PASSWORD_FROM_USERS_WHERE_LOGIN)) {
 
             statement.setString(1, login);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                passFromDb = resultSet.getString(2);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
 
-                match = password.equals(passFromDb);
+                    String hashPassFromDb = resultSet.getString(2);
+                    PasswordEncryptor passwordEncryptor = PasswordEncryptor.getInstance();
+                   // boolean match = passwordEncryptor.checkPasswordMatching(password, hashPassFromDb);
+//                    if (match) {
+//                        //todo mapper
+//                        //  user=
+//                    }
 
+
+                }
             }
 
-        } catch (SQLException e) {
 
+        } catch (SQLException e) {
+            //todo log
             throw new DaoException(e);
         }
-        return match;
+        return optionalUser;
     }
 }

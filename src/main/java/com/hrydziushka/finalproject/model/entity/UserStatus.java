@@ -1,4 +1,6 @@
 package com.hrydziushka.finalproject.model.entity;
 
-public enum Role {
+public enum UserStatus {
+    ACTIVE,
+    BLOCKED;
 }

@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-import static com.hrydziushka.finalproject.controller.command.AttributeAndParameter.COMMAND;
+import static com.hrydziushka.finalproject.controller.RequestParameter.COMMAND;
 
 @WebServlet(name = "helloServlet", urlPatterns = "/controller")
 public class Controller extends HttpServlet {
@@ -21,7 +21,6 @@ public class Controller extends HttpServlet {
 
     @Override
     public void init() {
-        ConnectionPool.getInstance();
 
 
     }
@@ -57,7 +56,6 @@ public class Controller extends HttpServlet {
 
     @Override
     public void destroy() {
-        ConnectionPool.getInstance().destroyPool();
 
     }
 }
