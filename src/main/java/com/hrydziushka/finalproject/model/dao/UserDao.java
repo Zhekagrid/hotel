@@ -6,6 +6,6 @@ import com.hrydziushka.finalproject.model.entity.User;
 import java.util.Optional;
 
 public interface UserDao {
-   Optional<User> authenticate(String login, String password) throws DaoException;
+   Optional<User> signIn(String login, String password) throws DaoException;
 
 }

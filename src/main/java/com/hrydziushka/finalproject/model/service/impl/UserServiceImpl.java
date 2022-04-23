@@ -5,6 +5,7 @@ import com.hrydziushka.finalproject.exception.ServiceException;
 import com.hrydziushka.finalproject.model.dao.impl.UserDaoImpl;
 import com.hrydziushka.finalproject.model.entity.User;
 import com.hrydziushka.finalproject.model.service.UserService;
+import com.hrydziushka.finalproject.util.validator.impl.UserValidatorImpl;
 
 import java.util.Optional;
 
@@ -19,15 +20,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> authenticate(String login, String password) throws ServiceException {
-        // TODO:   validate pass + encode
+    public Optional<User> signIn(String login, String password) throws ServiceException {
 
-        boolean match = false;
+        Optional<User> optionalUser = Optional.empty();
         try {
-            UserDaoImpl.getInstance().authenticate(login, password);
+            UserValidatorImpl userValidator = UserValidatorImpl.getInstance();
+            if (userValidator.validateLogin(login) && userValidator.validatePassword(password)) {
+                UserDaoImpl userDao = UserDaoImpl.getInstance();
+                optionalUser = userDao.signIn(login, password);
+            }
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
-        return Optional.empty();
+        return optionalUser;
     }
 }

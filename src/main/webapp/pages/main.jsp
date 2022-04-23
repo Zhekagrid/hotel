@@ -9,6 +9,7 @@
 <html>
 <head>
     <title>Main</title>
+    ${sessionScope.USER}
 </head>
 <body>
 USER =${user}

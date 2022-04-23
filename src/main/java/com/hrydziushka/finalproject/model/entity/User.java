@@ -14,6 +14,19 @@ public class User extends AbstractEntity {
         return new User().new Builder();
     }
 
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("User{");
+        sb.append("login='").append(login).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", phoneNumber='").append(phoneNumber).append('\'');
+        sb.append(", balance=").append(balance);
+        sb.append(", userRole=").append(userRole);
+        sb.append(", userStatus=").append(userStatus);
+        sb.append('}');
+        return sb.toString();
+    }
+
     public class Builder {
 
         private Builder() {

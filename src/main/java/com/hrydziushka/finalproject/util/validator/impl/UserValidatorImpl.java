@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 public class UserValidatorImpl implements UserValidator {
     //todo regex
      private static final String LOGIN_REGEX = "[\\p{Alpha}\\p{Digit}_-]{5,15}";
-    private static final String PASSWORD_REGEX = "(?=.*\\p{Digit})(?=.*[!@#$%^&*])(?=.*\\p{Lower})(?=.*\\p{Upper})[\\p{Digit}\\p{Alpha}!@#$%^&*]{7,}";
+    private static final String PASSWORD_REGEX = "(?=.*\\p{Digit})(?=.*[_\\-!@#$%^&*])(?=.*\\p{Lower})(?=.*\\p{Upper})[\\p{Digit}\\p{Alpha}!@#$%^&*_\\-]{7,}";
     private static final String EMAIL_REGEX = "[\\p{Digit}\\p{Alpha}._%+-]+@([\\p{Digit}\\p{Alpha}]){3,10}\\.(com|net|org|by|ru|de)";
     private static final String PHONE_NUMBER_REGEX = "^\\+\\d{3}((-\\d{2,3}-\\d{3}-\\d{2}-\\d{2})|(\\d{9,10}))$";
 
