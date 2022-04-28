@@ -14,7 +14,7 @@ import java.util.Optional;
 
 import static com.hrydziushka.finalproject.controller.RequestParameter.LOGIN;
 import static com.hrydziushka.finalproject.controller.RequestParameter.PASSWORD;
-import static com.hrydziushka.finalproject.controller.SessionAttribute.USER;
+import static com.hrydziushka.finalproject.controller.SessionAttribute.*;
 
 public class LoginCommand implements Command {
 
@@ -31,7 +31,12 @@ public class LoginCommand implements Command {
             Optional<User> optionalUser = userService.signIn(login, password);
 
             if (optionalUser.isPresent()) {
-                session.setAttribute(USER, optionalUser.get());
+
+                User user = optionalUser.get();
+                session.setAttribute(USER, user);
+                session.setAttribute(ROLE, user.getUserRole());
+                session.setAttribute(STATUS, user.getUserStatus());
+                //todo add pages
                 page = "pages/main.jsp";
             } else {
                 request.setAttribute("login_msg", "Incorrect login or pass");

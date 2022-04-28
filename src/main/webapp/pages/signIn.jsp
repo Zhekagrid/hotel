@@ -1,19 +1,16 @@
 <%--
   Created by IntelliJ IDEA.
   User: 37529
-  Date: 29.03.2022
-  Time: 22:12
+  Date: 26.04.2022
+  Time: 14:58
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Main</title>
-    ${sessionScope.USER}
+    <title>Title</title>
 </head>
 <body>
-<jsp:include page="../pages/header.jsp"/>
-USER =${user}
 
 </body>
 </html>

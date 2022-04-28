@@ -10,6 +10,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
@@ -17,7 +19,7 @@ import static com.hrydziushka.finalproject.controller.RequestParameter.COMMAND;
 
 @WebServlet(name = "helloServlet", urlPatterns = "/controller")
 public class Controller extends HttpServlet {
-
+private static final Logger logger= LogManager.getLogger();
 
     @Override
     public void init() {
@@ -38,8 +40,10 @@ public class Controller extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException {
 
         try {
+
             String commandName = request.getParameter(COMMAND);
             Command command = CommandType.defineCommand(commandName);
+
             Router router = command.execute(request);
             String page = router.getPage();
             switch (router.getType()) {

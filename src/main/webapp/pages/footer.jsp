@@ -1,16 +1,17 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: 37529
-  Date: 25.04.2022
-  Time: 16:18
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="locale"/>
+
+<fmt:message key="header.signIn" var="header_signIn"/>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
+
 
 </body>
 </html>

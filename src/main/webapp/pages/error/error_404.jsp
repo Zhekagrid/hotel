@@ -11,6 +11,10 @@
     <title>404</title>
 </head>
 <body>
-
+Request from: ${pageContext.errorData.requestURI} is failed
+Servlet name: ${pageContext.errorData.servletName}<br/>
+Status code: ${pageContext.errorData.statusCode}<br/>
+Exception: ${pageContext.exception}<br/>
+Message: ${pageContext.exception.message}<br/>
 </body>
 </html>

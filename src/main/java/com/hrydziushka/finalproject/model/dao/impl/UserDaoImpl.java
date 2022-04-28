@@ -21,12 +21,13 @@ import static com.hrydziushka.finalproject.model.dao.ColumnName.PASSWORD;
 
 public class UserDaoImpl implements BaseDao<User>, UserDao {
     private static final Logger logger = LogManager.getLogger();
-    public static final String SELECT_USER_BY_LOGIN = """
+    private static final String SELECT_USER_BY_LOGIN = """
             SELECT user_id, login, password, email
             , phone_number, balance, status, role
             FROM users JOIN  roles USING(role_id)
             JOIN statuses USING (status_id)
             WHERE login=?""";
+    private static final String INSERT_USER="";
 
     private static UserDaoImpl instance = new UserDaoImpl();
 
@@ -72,6 +73,7 @@ public class UserDaoImpl implements BaseDao<User>, UserDao {
                     PasswordEncryptor passwordEncryptor = PasswordEncryptor.getInstance();
                     boolean match = passwordEncryptor.checkPasswordMatching(password, hashPassFromDb);
                     if (match) {
+                        logger.info("Password is correct");
                         UserMapper userMapper = UserMapper.getInstance();
                         User user = userMapper.mapRow(resultSet);
                         optionalUser = Optional.of(user);
