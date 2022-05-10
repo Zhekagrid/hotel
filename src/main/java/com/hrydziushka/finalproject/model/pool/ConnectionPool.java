@@ -86,6 +86,7 @@ public class ConnectionPool {
                 // todo ask about remove
                 usedConnections.take();
                 freeConnections.put(proxyConnection);
+                logger.info("Connection released");
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 logger.error("can't add connection to free connections ", e);

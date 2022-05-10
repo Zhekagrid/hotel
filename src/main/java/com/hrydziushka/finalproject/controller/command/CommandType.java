@@ -1,13 +1,17 @@
 package com.hrydziushka.finalproject.controller.command;
 
 import com.hrydziushka.finalproject.controller.command.impl.*;
-
-import java.util.Locale;
+import com.hrydziushka.finalproject.controller.command.impl.go.GoToSignInPageCommand;
+import com.hrydziushka.finalproject.controller.command.impl.go.GoToSignUpCommand;
 
 public enum CommandType {
-    LOGIN(new LoginCommand()),
-    LOGOUT(new LogoutCommand()),
-    SIGNUP(new SignUpCommand()),
+    GO_TO_SIGN_IN_PAGE(new GoToSignInPageCommand()),
+    GO_TO_SIGN_UP_PAGE(new GoToSignUpCommand()),
+
+
+    SIGN_UP(new SignUpCommand()),
+    SIGN_IN(new SignInCommand()),
+    SIGN_OUT(new SignOutCommand()),
     CHANGE_LOCALE(new ChangeLocaleCommand()),
     DEFAULT(new DefaultCommand());
     Command command;

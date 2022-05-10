@@ -43,12 +43,12 @@ private static final Logger logger= LogManager.getLogger();
 
             String commandName = request.getParameter(COMMAND);
             Command command = CommandType.defineCommand(commandName);
-
+            logger.info(commandName);
             Router router = command.execute(request);
             String page = router.getPage();
             switch (router.getType()) {
                 case FORWARD -> request.getRequestDispatcher(page).forward(request, response);
-                case REDIRECT -> response.sendRedirect(page);
+                case REDIRECT -> response.sendRedirect(request.getContextPath()+page);
 
             }
         } catch (CommandException | IOException e) {

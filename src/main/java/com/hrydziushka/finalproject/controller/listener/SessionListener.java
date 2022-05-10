@@ -21,7 +21,6 @@ public class SessionListener implements HttpSessionListener {
     @Override
     public void sessionCreated(HttpSessionEvent se) {
         HttpSessionListener.super.sessionCreated(se);
-        ConnectionPool.getInstance();
         HttpSession session = se.getSession();
         session.setAttribute(LOCALE, DEFAULT_LOCALE);
         session.setAttribute(CURRENT_PAGE, PagePath.HOME_PAGE);
@@ -32,6 +31,6 @@ public class SessionListener implements HttpSessionListener {
     @Override
     public void sessionDestroyed(HttpSessionEvent se) {
         HttpSessionListener.super.sessionDestroyed(se);
-        ConnectionPool.getInstance().destroyPool();
+
     }
 }

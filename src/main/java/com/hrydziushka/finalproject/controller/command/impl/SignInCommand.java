@@ -16,7 +16,7 @@ import static com.hrydziushka.finalproject.controller.RequestParameter.LOGIN;
 import static com.hrydziushka.finalproject.controller.RequestParameter.PASSWORD;
 import static com.hrydziushka.finalproject.controller.SessionAttribute.*;
 
-public class LoginCommand implements Command {
+public class SignInCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {

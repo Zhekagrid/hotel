@@ -7,89 +7,80 @@
 <html>
 <head>
     <title>Header</title>
-    <link rel="stylesheet" href="<c:url value="/css/bootstrap.min.css"/>" >
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
 </head>
 <body>
-
-<nav class="navbar mb-6 navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">
-        <fmt:message key="header.brand"/>
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-6 mb-lg-0">
-            <li class="nav-item ">
-                <a class="nav-link" href="#">
-                    <fmt:message key="header.home"/></a>
-            </li>
-
-            <c:if test="${sessionScope.role=='ADMIN'}">
-                <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=go_to_users_page">
-                        <fmt:message key="header.users"/></a>
-                </li>
-            </c:if>
-            <c:if test="${sessionScope.role=='USER'}">
-
-            </c:if>
-            <c:if test="${sessionScope.role=='GUEST'}">
-
-                <li class="nav-item">
-                    <a class="nav-link" href="#"> <fmt:message key="header.signIn"/></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"> <fmt:message key="header.signUp"/></a>
-                </li>
-
-            </c:if>
-            <c:if test="${sessionScope.role!='GUEST'}">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"> <fmt:message key="header.signOut"/></a>
-                </li>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img  src="${pageContext.request.contextPath}/img/hotel_logo.png">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item ">
-                    <a class="nav-link " href="#">
-                        <img src="<c:url value="/img/user.png"/>"></a>
+                    <a class="nav-link" href="#">
+                        <fmt:message key="header.home"/></a>
                 </li>
-            </c:if>
 
-            <li class="nav-item ">
-                <a class="nav-link"
-                   href="${pageContext.request.contextPath}/controller?command=change_locale&language=en">EN</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link"
-                   href="${pageContext.request.contextPath}/controller?command=change_locale&language=ru">RU</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link"
-                   href="${pageContext.request.contextPath}/controller?command=change_locale&language=de">DE</a>
-            </li>
+                <c:if test="${sessionScope.role=='ADMIN'}">
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="${pageContext.request.contextPath}/controller?command=go_to_users_page">
+                            <fmt:message key="header.users"/></a>
+                    </li>
+                </c:if>
+
+                <c:if test="${sessionScope.role=='USER'}">
 
 
-        </ul>
+                </c:if>
 
+
+            </ul>
+            <div class="d-flex">
+
+                <c:if test="${sessionScope.role=='GUEST'}">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=go_to_sign_in_page"> <fmt:message key="header.signIn"/></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=go_to_sign_up_page"> <fmt:message key="header.signUp"/></a>
+                </c:if>
+
+                <c:if test="${sessionScope.role!='GUEST'}">
+
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">
+                                <img  src="${pageContext.request.contextPath}/img/user.png" >
+                                <fmt:message key="header.profile"/>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                <li>
+                                    <a class="dropdown-item" href="#"> <fmt:message key="header.signOut"/></a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+
+
+                </c:if>
+            </div>
+        </div>
     </div>
 </nav>
 
 
+<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 
-<script src="<c:url value="/js/bootstrap.bundle.min.js"/>"></script>
 
 
 </body>
