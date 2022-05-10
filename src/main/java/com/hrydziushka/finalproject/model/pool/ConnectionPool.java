@@ -83,8 +83,8 @@ public class ConnectionPool {
         if (connection instanceof ProxyConnection proxyConnection) {
 
             try {
-                // todo ask about remove
-                usedConnections.take();
+
+                usedConnections.remove(connection);
                 freeConnections.put(proxyConnection);
                 logger.info("Connection released");
             } catch (InterruptedException e) {

@@ -13,6 +13,17 @@ public class ProxyConnection implements Connection {
     }
 
     @Override
+    public void close() throws SQLException {
+        if (!connection.getAutoCommit()) {
+            connection.setAutoCommit(true);
+        }
+        ConnectionPool.getInstance().releaseConnection(this);
+    }
+
+    void realClose() throws SQLException {
+        connection.close();
+    }
+    @Override
     public Statement createStatement() throws SQLException {
         return connection.createStatement();
     }
@@ -52,17 +63,7 @@ public class ProxyConnection implements Connection {
         connection.rollback();
     }
 
-    @Override
-    public void close() throws SQLException {
-        if (!connection.getAutoCommit()) {
-            connection.setAutoCommit(true);
-        }
-        ConnectionPool.getInstance().releaseConnection(this);
-    }
 
-    void realClose() throws SQLException {
-        connection.close();
-    }
 
     @Override
     public boolean isClosed() throws SQLException {
