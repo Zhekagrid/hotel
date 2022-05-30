@@ -6,14 +6,15 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
 import static com.hrydziushka.finalproject.controller.RequestParameter.COMMAND;
 import static com.hrydziushka.finalproject.controller.SessionAttribute.CURRENT_PAGE;
+import static com.hrydziushka.finalproject.controller.SessionAttribute.PREV_PAGE_URI;
 
-@WebFilter(urlPatterns = {"/controller","/pages/*"})
+
+@WebFilter(urlPatterns = {"/controller", "/pages/*"},dispatcherTypes = {DispatcherType.FORWARD,DispatcherType.REQUEST})
 public class PageFilter implements Filter {
 
     public void init(FilterConfig config) throws ServletException {
@@ -29,18 +30,21 @@ public class PageFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         String commandName = httpServletRequest.getParameter(COMMAND);
         HttpSession session = httpServletRequest.getSession();
-        if (commandName != null && CommandType.valueOf(commandName.toUpperCase()) != CommandType.CHANGE_LOCALE) {
+        try {
 
 
-            //todo
-            String currentPage = httpServletRequest.getServletPath()+"?" + httpServletRequest.getQueryString();
-            Logger logger = LogManager.getLogger();
-            logger.info(((HttpServletRequest) request).getServletPath());
-            logger.info(currentPage);
-            session.setAttribute(CURRENT_PAGE, currentPage);
+            if (commandName != null && CommandType.valueOf(commandName.toUpperCase()) != CommandType.CHANGE_LOCALE) {
+//todo
+                String prevPageUri= (String) session.getAttribute(CURRENT_PAGE);
+                session.setAttribute(PREV_PAGE_URI,prevPageUri);
+                String currentPage =   "/controller?" + httpServletRequest.getQueryString();
+                session.setAttribute(CURRENT_PAGE, currentPage);
 
+
+            }
+        } catch (IllegalArgumentException e) {
+            //todo default command
         }
-
         chain.doFilter(request, response);
     }
 }

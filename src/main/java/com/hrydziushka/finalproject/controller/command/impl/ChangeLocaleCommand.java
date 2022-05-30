@@ -16,11 +16,14 @@ public class ChangeLocaleCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         String locale = request.getParameter(LANGUAGE);
+        //todo switch
         HttpSession session = request.getSession();
         session.setAttribute(SessionAttribute.LOCALE, locale);
+        //todo refactor
         String currentPage = (String) session.getAttribute(SessionAttribute.CURRENT_PAGE);
         logger.info("Locale changed, and new locale is "+locale);
-        return new Router(currentPage, Router.RouterType.REDIRECT);
+
+        return new Router(currentPage, Router.RouterType.FORWARD);
 
 
     }

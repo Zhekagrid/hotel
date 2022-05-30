@@ -10,8 +10,8 @@ public class User extends AbstractEntity {
     private UserRole userRole;
     private UserStatus userStatus;
 
-    public static Builder newBuilder() {
-        return new User().new Builder();
+    public static UserBuilder newBuilder() {
+        return new User().new UserBuilder();
     }
 
     @Override
@@ -27,43 +27,43 @@ public class User extends AbstractEntity {
         return sb.toString();
     }
 
-    public class Builder {
+    public class UserBuilder {
 
-        private Builder() {
+        private UserBuilder() {
 
         }
 
-        public Builder setId(Long id) {
+        public UserBuilder setId(Long id) {
             User.this.setId(id);
             return this;
         }
 
-        public Builder setLogin(String login) {
+        public UserBuilder setLogin(String login) {
             User.this.login = login;
             return this;
         }
 
-        public Builder setEmail(String email) {
+        public UserBuilder setEmail(String email) {
             User.this.email = email;
             return this;
         }
 
-        public Builder setPhoneNumber(String phoneNumber) {
+        public UserBuilder setPhoneNumber(String phoneNumber) {
             User.this.phoneNumber = phoneNumber;
             return this;
         }
 
-        public Builder setBalance(BigDecimal balance) {
+        public UserBuilder setBalance(BigDecimal balance) {
             User.this.balance = balance;
             return this;
         }
 
-        public Builder setUserRole(UserRole userRole) {
+        public UserBuilder setUserRole(UserRole userRole) {
             User.this.userRole = userRole;
             return this;
         }
 
-        public Builder setUserStatus(UserStatus userStatus) {
+        public UserBuilder setUserStatus(UserStatus userStatus) {
             User.this.userStatus = userStatus;
             return this;
         }

@@ -2,7 +2,7 @@ package com.hrydziushka.finalproject.controller.command;
 
 public class Router {
     private String page;
-    private RouterType type=RouterType.FORWARD;
+    private RouterType type;
 
     public Router(String page, RouterType type) {
         this.page = page;

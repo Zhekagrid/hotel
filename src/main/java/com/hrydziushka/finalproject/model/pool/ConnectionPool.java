@@ -14,7 +14,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class ConnectionPool {
     private static final Logger logger = LogManager.getLogger();
-    private static final int POOL_SIZE = 5;
+    private static final int DEFAULT_POOL_SIZE = 5;
 
     private static ConnectionPool instance;
     private static AtomicBoolean isCreated = new AtomicBoolean(false);
@@ -25,24 +25,21 @@ public class ConnectionPool {
     private BlockingQueue<ProxyConnection> freeConnections;
 
     private ConnectionPool() {
-        usedConnections = new LinkedBlockingQueue<>(POOL_SIZE);
-        freeConnections = new LinkedBlockingQueue<>(POOL_SIZE);
+        usedConnections = new LinkedBlockingQueue<>(DEFAULT_POOL_SIZE);
+        freeConnections = new LinkedBlockingQueue<>(DEFAULT_POOL_SIZE);
 
-        for (int i = 0; i < POOL_SIZE; i++) {
+        for (int i = 0; i < DEFAULT_POOL_SIZE; i++) {
             Connection connection = ConnectionFactory.createConnection();
             if (connection != null) {
-                try {
-                    freeConnections.put(new ProxyConnection(connection));
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                    //todo log
-                }
-            } else {
-                logger.error("Connection is not created");
+
+                freeConnections.add(new ProxyConnection(connection));
+
             }
         }
-
-        //todo chek pool size and try to add connections
+        if (freeConnections.isEmpty()) {
+            logger.fatal("Connection pull is empty");
+            throw new RuntimeException();
+        }
     }
 
 
@@ -54,7 +51,7 @@ public class ConnectionPool {
                     instance = new ConnectionPool();
                     isCreated.set(true);
 
-                    logger.info("init");
+                    logger.info("Connection pull init");
                 }
             } finally {
                 createLock.unlock();
@@ -89,7 +86,7 @@ public class ConnectionPool {
                 logger.info("Connection released");
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                logger.error("can't add connection to free connections ", e);
+                logger.error("Can't add connection to free connections ", e);
             }
 
         } else {
@@ -100,13 +97,13 @@ public class ConnectionPool {
 
     public void destroyPool() {
 
-        for (int i = 0; i < POOL_SIZE; i++) {
+        for (int i = 0; i < DEFAULT_POOL_SIZE; i++) {
             try {
                 freeConnections.take().realClose();
             } catch (SQLException e) {
-                logger.error("can't close connection,e");
+                logger.error("Can't close connection,e");
             } catch (InterruptedException e) {
-                logger.error("can't close connection,e");
+                logger.error("Can't close connection,e");
                 Thread.currentThread().interrupt();
             }
         }
@@ -119,7 +116,7 @@ public class ConnectionPool {
             try {
                 DriverManager.deregisterDriver(driver);
             } catch (SQLException e) {
-                logger.error("can't deregister driver", e);
+                logger.error("Can't deregister driver", e);
             }
         });
 

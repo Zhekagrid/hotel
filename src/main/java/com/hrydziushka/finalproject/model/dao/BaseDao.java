@@ -6,11 +6,11 @@ import com.hrydziushka.finalproject.exception.DaoException;
 import java.util.List;
 
 public interface BaseDao<T extends AbstractEntity> {
-    boolean insert(T t) throws DaoException;
+   long insert(T t) throws DaoException;
 
     boolean delete(T t) throws DaoException;
 
-    List<T> findAll() throws DaoException;
+    List<T> findAllInRange(int offset, int rowCount) throws DaoException;
 
-    T update(T t) throws DaoException;
+    boolean update(T t) throws DaoException;
 }

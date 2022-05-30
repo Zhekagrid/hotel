@@ -24,7 +24,9 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item ">
-                    <a class="nav-link" href="#">
+
+<%--                    todo change because now it is go to apartments page--%>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=go_to_apartments_page">
                         <fmt:message key="header.home"/></a>
                 </li>
 
@@ -64,7 +66,7 @@
 
                                 <li><a class="dropdown-item" href="#">Something else here</a></li>
                                 <li>
-                                    <a class="dropdown-item" href="#"> <fmt:message key="header.signOut"/></a>
+                                    <a class="dropdown-item" href="${pageContext.request.contextPath}/controller?command=sign_out"> <fmt:message key="header.signOut"/></a>
                                 </li>
                             </ul>
                         </li>

@@ -11,6 +11,6 @@ import static com.hrydziushka.finalproject.controller.PagePath.SIGN_IN_PAGE;
 public class GoToSignInPageCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-        return new Router(SIGN_IN_PAGE, Router.RouterType.REDIRECT);
+        return new Router(SIGN_IN_PAGE, Router.RouterType.FORWARD);
     }
 }

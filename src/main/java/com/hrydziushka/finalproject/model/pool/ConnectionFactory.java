@@ -10,7 +10,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class ConnectionFactory {
+ class ConnectionFactory {
     private static final Logger logger = LogManager.getLogger();
     private static final String DATABASE_PROPERTY_PATH = "config/database.properties";
     private static final String DATABASE_DRIVER_KEY = "driver";

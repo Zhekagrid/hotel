@@ -6,5 +6,5 @@ import com.hrydziushka.finalproject.model.entity.AbstractEntity;
 import java.sql.ResultSet;
 
 public interface Mapper<T extends AbstractEntity>{
-    T mapRow(ResultSet resultSet) throws DaoException;
+    T mapResultSet(ResultSet resultSet) throws DaoException;
 }
