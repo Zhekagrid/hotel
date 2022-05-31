@@ -1,12 +1,12 @@
 package com.hrydziushka.finalproject.model.dao;
 
-import com.hrydziushka.finalproject.model.entity.AbstractEntity;
 import com.hrydziushka.finalproject.exception.DaoException;
+import com.hrydziushka.finalproject.model.entity.AbstractEntity;
 
 import java.util.List;
 
 public interface BaseDao<T extends AbstractEntity> {
-   long insert(T t) throws DaoException;
+    long insert(T t) throws DaoException;
 
     boolean delete(T t) throws DaoException;
 
