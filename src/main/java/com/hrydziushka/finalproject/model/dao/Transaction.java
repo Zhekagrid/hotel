@@ -23,7 +23,7 @@ public class Transaction implements AutoCloseable {
             throw new DaoException("There was an error at the start of the transaction", e);
         }
         for (BaseDao dao : baseDaos) {
-            dao.setConnection(connection);
+           // dao.setConnection(connection);
 
         }
     }
