@@ -39,7 +39,7 @@ public class ApartmentMapperImpl implements Mapper<Apartment> {
             return apartment;
         } catch (SQLException e) {
             logger.error("An error occurred when creating an Appartment object in the mapper", e);
-            throw new DaoException(e);
+            throw new DaoException("An error occurred when creating an Appartment object in the mapper",e);
         }
     }
 }

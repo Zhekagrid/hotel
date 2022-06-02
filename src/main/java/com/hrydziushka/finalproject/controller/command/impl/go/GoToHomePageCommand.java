@@ -53,6 +53,6 @@ public class GoToHomePageCommand implements Command {
 
         }
         //todo
-        return null;
+        return new Router(HOME_PAGE, Router.RouterType.FORWARD);
     }
 }

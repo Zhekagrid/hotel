@@ -15,7 +15,6 @@ import static com.hrydziushka.finalproject.model.dao.ColumnName.*;
 
 public class UserMapperImpl implements Mapper<User> {
     private static final Logger logger = LogManager.getLogger();
-
     private static UserMapperImpl instance = new UserMapperImpl();
 
 
@@ -41,7 +40,7 @@ public class UserMapperImpl implements Mapper<User> {
             return user;
         } catch (SQLException e) {
             logger.error("An error occurred when creating a User object in the mapper", e);
-            throw new DaoException(e);
+            throw new DaoException("An error occurred when creating a User object in the mapper",e);
         }
 
     }

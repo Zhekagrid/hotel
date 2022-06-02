@@ -17,7 +17,7 @@ import java.util.Optional;
 
 import static com.hrydziushka.finalproject.model.dao.ColumnName.*;
 
-public class UserDaoImpl implements BaseDao<User>, UserDao {
+public class UserDaoImpl implements BaseDao<User>,UserDao {
     private static final Logger logger = LogManager.getLogger();
     private static final String SELECT_USER_BY_LOGIN = """
             SELECT user_id, login, password, email
@@ -85,7 +85,7 @@ public class UserDaoImpl implements BaseDao<User>, UserDao {
 
         } catch (SQLException e) {
             logger.error("An error occurred when inserting a user into the database. User: " + user.toString(), e);
-            throw new DaoException(e);
+            throw new DaoException("An error occurred when inserting a user into the database. User: " + user,e);
 
         }
     }
@@ -103,8 +103,9 @@ public class UserDaoImpl implements BaseDao<User>, UserDao {
             statement.setInt(1, offset);
             statement.setInt(2, rowCount);
             try (ResultSet resultSet = statement.executeQuery()) {
+                UserMapperImpl userMapperImpl = UserMapperImpl.getInstance();
                 while (resultSet.next()) {
-                    UserMapperImpl userMapperImpl = UserMapperImpl.getInstance();
+
                     User user = userMapperImpl.mapResultSet(resultSet);
                     userList.add(user);
 
@@ -112,7 +113,7 @@ public class UserDaoImpl implements BaseDao<User>, UserDao {
             }
         } catch (SQLException e) {
             logger.error("An error occurred when trying to find users in the interval. Offset: " + offset + " RowCount: " + rowCount, e);
-            throw new DaoException(e);
+            throw new DaoException("An error occurred when trying to find users in the interval. Offset: " + offset + " RowCount: " + rowCount,e);
         }
 
         return userList;
@@ -137,7 +138,7 @@ public class UserDaoImpl implements BaseDao<User>, UserDao {
             }
         } catch (SQLException e) {
             logger.error("An error occurred when trying to update user's information. New user's information: " + user.toString(), e);
-            throw new DaoException(e);
+            throw new DaoException("An error occurred when trying to update user's information. New user's information: " + user,e);
 
         }
 
@@ -169,7 +170,7 @@ public class UserDaoImpl implements BaseDao<User>, UserDao {
 
         } catch (SQLException e) {
             logger.error("An error occurred when trying to authenticate a user by login and password. Login: " + login + " Password: " + password, e);
-            throw new DaoException(e);
+            throw new DaoException("An error occurred when trying to authenticate a user by login and password. Login: " + login + " Password: " + password,e);
         }
         return optionalUser;
     }
@@ -187,7 +188,7 @@ public class UserDaoImpl implements BaseDao<User>, UserDao {
 
         } catch (SQLException e) {
             logger.error("An error occurred while counting the number of users in the database", e);
-            throw new DaoException(e);
+            throw new DaoException("An error occurred while counting the number of users in the database",e);
 
         }
 
@@ -203,7 +204,7 @@ public class UserDaoImpl implements BaseDao<User>, UserDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             logger.error("An error occurred while trying to update the user password. User id: " + userId + "Hash password: " + hashPassword, e);
-            throw new DaoException(e);
+            throw new DaoException("An error occurred while trying to update the user password. User id: " + userId + "Hash password: " + hashPassword,e);
         }
     }
 
@@ -215,13 +216,13 @@ public class UserDaoImpl implements BaseDao<User>, UserDao {
             statement.setString(1, email);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    return resultSet.getBoolean(USERS_EXISTS);
+                    return resultSet.getBoolean(USER_EXISTS);
                 }
             }
 
         } catch (SQLException e) {
             logger.error("An error occurred while checking the database for the uniqueness of email: " + email, e);
-            throw new DaoException(e);
+            throw new DaoException("An error occurred while checking the database for the uniqueness of email: " + email,e);
 
         }
         return true;
@@ -245,7 +246,7 @@ public class UserDaoImpl implements BaseDao<User>, UserDao {
 
         } catch (SQLException e) {
             logger.error("An error occurred when searching for a user with id:" + userId, e);
-            throw new DaoException(e);
+            throw new DaoException("An error occurred when searching for a user with id:" + userId,e);
         }
         return optionalUser;
     }
@@ -258,13 +259,13 @@ public class UserDaoImpl implements BaseDao<User>, UserDao {
             statement.setString(1, login);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    return resultSet.getBoolean(USERS_EXISTS);
+                    return resultSet.getBoolean(USER_EXISTS);
                 }
             }
 
         } catch (SQLException e) {
             logger.error("An error occurred while checking the database for the uniqueness of login: " + login, e);
-            throw new DaoException(e);
+            throw new DaoException("An error occurred while checking the database for the uniqueness of login: " + login,e);
 
         }
         return true;

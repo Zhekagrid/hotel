@@ -11,7 +11,7 @@ public final class ColumnName {
     public static final String STATUS = "status";
     public static final String USER_ID = "user_id";
     public static final String USERS_COUNT="users_count";
-    public static final String USERS_EXISTS ="users_exists";
+    public static final String USER_EXISTS ="user_exists";
 
     //apartments columns
     public static final String APARTMENT_ID = "apartment_id";

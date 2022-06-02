@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
             }
         } catch (DaoException e) {
             logger.error("An error occurred during user authentication ", e);
-            throw new ServiceException(e);
+            throw new ServiceException("An error occurred during user authentication ", e);
         }
         return optionalUser;
     }
@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
                     optionalUser = Optional.of(user);
                 } catch (DaoException e) {
                     logger.error("There was an error when registering a new user", e);
-                    throw new ServiceException(e);
+                    throw new ServiceException("There was an error when registering a new user", e);
 
                 }
             }
@@ -108,7 +108,7 @@ public class UserServiceImpl implements UserService {
 
         } catch (DaoException e) {
             logger.error("An error occurred while checking the database for the uniqueness of email: " + email, e);
-            throw new ServiceException(e);
+            throw new ServiceException("An error occurred while checking the database for the uniqueness of email: " + email, e);
 
         }
 
@@ -121,7 +121,7 @@ public class UserServiceImpl implements UserService {
 
         } catch (DaoException e) {
             logger.error("An error occurred while checking the database for the uniqueness of login: " + login, e);
-            throw new ServiceException(e);
+            throw new ServiceException("An error occurred while checking the database for the uniqueness of login: " + login, e);
 
         }
     }
@@ -134,7 +134,7 @@ public class UserServiceImpl implements UserService {
             return userDao.usersCount();
         } catch (DaoException e) {
             logger.error("An error occurred while counting the number of users in the database", e);
-            throw new ServiceException(e);
+            throw new ServiceException("An error occurred while counting the number of users in the database", e);
 
         }
     }
@@ -147,7 +147,7 @@ public class UserServiceImpl implements UserService {
             return userDao.findUserById(id);
         } catch (DaoException e) {
             logger.error("An error occurred when searching for a user with id:" + id, e);
-            throw new ServiceException(e);
+            throw new ServiceException("An error occurred when searching for a user with id:" + id, e);
 
         }
     }
@@ -163,7 +163,7 @@ public class UserServiceImpl implements UserService {
                 userRole = UserRole.valueOf(role);
             } catch (IllegalArgumentException e) {
                 logger.error("An error occurred when trying to change a user's role or status. Incorrect role or status. Role: " + role + "Status: " + status, e);
-                throw new ServiceException(e);
+                throw new ServiceException("An error occurred when trying to change a user's role or status. Incorrect role or status. Role: " + role + "Status: " + status, e);
 
             }
             try {
@@ -199,7 +199,7 @@ public class UserServiceImpl implements UserService {
 
         } catch (DaoException e) {
             logger.error("There was an error when finding for users for " + page + " page and with the number of users per page " + usersCountPerPage, e);
-            throw new ServiceException(e);
+            throw new ServiceException("There was an error when finding for users for " + page + " page and with the number of users per page " + usersCountPerPage, e);
 
         }
 

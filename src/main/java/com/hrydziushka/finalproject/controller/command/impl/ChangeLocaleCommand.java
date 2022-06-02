@@ -12,16 +12,27 @@ import org.apache.logging.log4j.Logger;
 import static com.hrydziushka.finalproject.controller.RequestParameter.LANGUAGE;
 
 public class ChangeLocaleCommand implements Command {
-    private static final Logger logger= LogManager.getLogger();
+    private static final String ENGLISH_LOCALE = "en";
+    private static final String GERMAN_LOCALE = "de";
+    private static final String RUSSIAN_LOCALE = "ru";
+
+    private static final Logger logger = LogManager.getLogger();
+
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         String locale = request.getParameter(LANGUAGE);
-        //todo switch
         HttpSession session = request.getSession();
-        session.setAttribute(SessionAttribute.LOCALE, locale);
-        //todo refactor
+
+        switch (locale) {
+            case RUSSIAN_LOCALE -> session.setAttribute(SessionAttribute.LOCALE, RUSSIAN_LOCALE);
+            case GERMAN_LOCALE -> session.setAttribute(SessionAttribute.LOCALE, GERMAN_LOCALE);
+            default -> session.setAttribute(SessionAttribute.LOCALE, ENGLISH_LOCALE);
+        }
+
+
+//todo refactor
         String currentPage = (String) session.getAttribute(SessionAttribute.CURRENT_PAGE);
-        logger.info("Locale changed, and new locale is "+locale);
+        logger.info("Locale changed, and new locale is " + locale);
 
         return new Router(currentPage, Router.RouterType.FORWARD);
 

@@ -80,7 +80,7 @@ public class ApartmentDaoImpl implements BaseDao<Apartment>, ApartmentDao {
             }
         } catch (SQLException e) {
             logger.error("There was an error in finding the number of apartments.", e);
-            throw new DaoException(e);
+            throw new DaoException("There was an error in finding the number of apartments.", e);
 
         }
         return apartmentsCount;
@@ -103,7 +103,7 @@ public class ApartmentDaoImpl implements BaseDao<Apartment>, ApartmentDao {
             }
         } catch (SQLException e) {
             logger.error("There was an error in finding the apartments on the segment. Offset: " + offset + "RowCount: " + rowCount, e);
-            throw new DaoException(e);
+            throw new DaoException("There was an error in finding the apartments on the segment. Offset: " + offset + "RowCount: " + rowCount, e);
 
         }
 
@@ -127,8 +127,8 @@ public class ApartmentDaoImpl implements BaseDao<Apartment>, ApartmentDao {
             }
 
         } catch (SQLException e) {
-            logger.error("There was an error finding an apartment by id: "+apartmentId,e);
-            throw new DaoException(e);
+            logger.error("There was an error finding an apartment by id: " + apartmentId, e);
+            throw new DaoException("There was an error finding an apartment by id: " + apartmentId, e);
         }
         return optionalApartment;
     }

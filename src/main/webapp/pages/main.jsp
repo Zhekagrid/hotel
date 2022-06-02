@@ -26,7 +26,7 @@ ${sessionScope.role}
     <input type="submit" value="ok"/>
 </form>
 <img src="${requestScope.new_file1}" width="150" height="auto"/>
-<img src="${requestScope.new_file2}"width="150" height="auto"/>
+<img src="${requestScope.new_file2}" width="150" height="auto"/>
 <c:if test="${sessionScope.role=='ADMIN'}">
     ${requestScope.page}
 
@@ -50,7 +50,7 @@ ${sessionScope.role}
                         </thead>
                         <tbody>
                         <c:forEach items="${requestScope.users}" var="user">
-                            <form method="post"  >
+                            <form method="post">
                                 <input type="hidden" name="selectedUserId" value="${user.id}">
 
                                 <tr>
@@ -89,8 +89,9 @@ ${sessionScope.role}
                                     <td>
 
 
-                                        <span><button class="btn btn-outline-primary" type="submit" formaction="${pageContext.request.contextPath}/controller?command=save_user_changes"><fmt:message
-                                                key="label.save" /> </button></span>
+                                        <span><button class="btn btn-outline-primary" type="submit"
+                                                      formaction="${pageContext.request.contextPath}/controller?command=save_user_changes"><fmt:message
+                                                key="label.save"/> </button></span>
                                     </td>
                                 </tr>
                             </form>
@@ -133,7 +134,7 @@ ${sessionScope.role}
                                 </li>
                             </c:if>
 
-                            <form method="get"       action="${pageContext.request.contextPath}/controller">
+                            <form method="get" action="${pageContext.request.contextPath}/controller">
 
                                 <input type="hidden" name="command" value="go_to_home_page"/>
                                 <div class="form-group col-md-4">

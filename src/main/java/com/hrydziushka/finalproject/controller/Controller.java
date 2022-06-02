@@ -41,6 +41,7 @@ public class Controller extends HttpServlet {
         String commandName = request.getParameter(COMMAND);
         try {
             Command command = CommandType.defineCommand(commandName);
+            logger.info("Current command "+commandName);
             Router router = command.execute(request);
             String page = router.getPage();
             switch (router.getType()) {

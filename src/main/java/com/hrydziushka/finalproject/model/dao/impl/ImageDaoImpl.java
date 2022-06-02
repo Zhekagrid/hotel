@@ -17,7 +17,7 @@ import java.util.*;
 
 import static com.hrydziushka.finalproject.model.dao.ColumnName.*;
 
-public class ImageDaoImpl implements BaseDao<ApartmentImage>, ImageDao {
+public class ImageDaoImpl  implements BaseDao<ApartmentImage>, ImageDao {
     private static final Logger logger = LogManager.getLogger();
     private static final String PICTURE_HEADER = "data:image/jpg;base64,";
 
@@ -86,7 +86,7 @@ public class ImageDaoImpl implements BaseDao<ApartmentImage>, ImageDao {
 
         } catch (SQLException | IOException e) {
             logger.error("There was an error finding all the pictures of the apartment by the id of the apartment Apartment_id: " + apartmentId, e);
-            throw new DaoException(e);
+            throw new DaoException("There was an error finding all the pictures of the apartment by the id of the apartment Apartment_id: " + apartmentId,e);
         }
 
         return apartmentImages;
@@ -123,7 +123,7 @@ public class ImageDaoImpl implements BaseDao<ApartmentImage>, ImageDao {
 
         } catch (SQLException | IOException e) {
             logger.error("There was an error when finding all the images of all the apartments",e);
-            throw new DaoException(e);
+            throw new DaoException("There was an error when finding all the images of all the apartments",e);
 
         }
         return imagesOfApartments;

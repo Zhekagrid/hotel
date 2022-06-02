@@ -39,7 +39,7 @@ public class ApartmentServiceImpl implements ApartmentService {
 
         } catch (DaoException e) {
             logger.error("The error occurred while counting the number of apartments", e);
-            throw new ServiceException(e);
+            throw new ServiceException("The error occurred while counting the number of apartments", e);
 
         }
 
@@ -69,7 +69,7 @@ public class ApartmentServiceImpl implements ApartmentService {
 
         } catch (DaoException e) {
             logger.error("There was an error when searching for apartments for the" + page + " page with the number of apartments on one page " + apartmentsCountPerPage, e);
-            throw new ServiceException(e);
+            throw new ServiceException("There was an error when searching for apartments for the" + page + " page with the number of apartments on one page " + apartmentsCountPerPage, e);
         }
 
 
