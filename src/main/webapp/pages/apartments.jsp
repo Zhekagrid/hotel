@@ -166,7 +166,7 @@
                 </div>
                 <div class="d-flex justify-content-start">
                     <button type="submit" class="btn btn-primary  "
-                            formaction="${pageContext.request.contextPath}/controller?command=go_to_book_apartment_page">
+                            formaction="${pageContext.request.contextPath}/controller?command=go_to_book_apartment_page&selectedApartmentId=${apartment.id}">
                         <fmt:message key="label.book"/>
                     </button>
                 </div>

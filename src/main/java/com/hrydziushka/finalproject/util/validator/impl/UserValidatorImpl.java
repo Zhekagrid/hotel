@@ -67,29 +67,22 @@ public class UserValidatorImpl implements UserValidator {
 
     @Override
     public boolean validatePassword(String password) {
-        Pattern pattern = Pattern.compile(PASSWORD_REGEX);
-        Matcher matcher = pattern.matcher(password);
-        return matcher.matches();
+        return password!=null&&password.matches(PASSWORD_REGEX);
     }
 
     @Override
     public boolean validateEmail(String email) {
-        Pattern pattern = Pattern.compile(EMAIL_REGEX);
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
+      return email!=null&&email.matches(EMAIL_REGEX);
     }
 
     @Override
     public boolean validateLogin(String login) {
-        Pattern pattern = Pattern.compile(LOGIN_REGEX);
-        Matcher matcher = pattern.matcher(login);
-        return matcher.matches();
+        return login != null && login.matches(LOGIN_REGEX);
     }
 
     @Override
     public boolean validatePhoneNumber(String phoneNumber) {
-        Pattern pattern = Pattern.compile(PHONE_NUMBER_REGEX);
-        Matcher matcher = pattern.matcher(phoneNumber);
-        return matcher.matches();
+
+        return phoneNumber != null && phoneNumber.matches(PHONE_NUMBER_REGEX);
     }
 }

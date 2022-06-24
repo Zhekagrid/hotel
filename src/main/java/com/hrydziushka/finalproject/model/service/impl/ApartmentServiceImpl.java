@@ -28,7 +28,17 @@ public class ApartmentServiceImpl implements ApartmentService {
 
     @Override
     public Optional<Apartment> findApartmentById(Long id) throws ServiceException {
-        return Optional.empty();
+        try {
+            ApartmentDaoImpl apartmentDao = ApartmentDaoImpl.getInstance();
+            ImageDaoImpl imageDao = ImageDaoImpl.getInstance();
+            Set<ApartmentImage> apartmentImages = imageDao.findAllApartmentImagesByApartmentId(id);
+            Optional<Apartment> apartmentOptional = apartmentDao.findApartmentById(id);
+            apartmentOptional.ifPresent(apartment -> apartment.setImages(apartmentImages));
+            return apartmentOptional;
+        } catch (DaoException e) {
+            //todo log
+            throw new ServiceException(e);
+        }
     }
 
     @Override

@@ -97,13 +97,13 @@ public class ApartmentDaoImpl implements BaseDao<Apartment>, ApartmentDao {
             try (ResultSet resultSet = statement.executeQuery()) {
                 ApartmentMapperImpl apartmentMapper = ApartmentMapperImpl.getInstance();
                 while (resultSet.next()) {
-                    Apartment apartment = apartmentMapper.mapResultSet(resultSet);
+                    Apartment apartment = apartmentMapper.mapRow(resultSet);
                     apartmentList.add(apartment);
                 }
             }
         } catch (SQLException e) {
-            logger.error("There was an error in finding the apartments on the segment. Offset: " + offset + "RowCount: " + rowCount, e);
-            throw new DaoException("There was an error in finding the apartments on the segment. Offset: " + offset + "RowCount: " + rowCount, e);
+            logger.error("There was an error in finding the apartments on the segment.", e);
+            throw new DaoException("There was an error in finding the apartments on the segment.", e);
 
         }
 
@@ -121,14 +121,14 @@ public class ApartmentDaoImpl implements BaseDao<Apartment>, ApartmentDao {
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     ApartmentMapperImpl apartmentMapper = ApartmentMapperImpl.getInstance();
-                    Apartment apartment = apartmentMapper.mapResultSet(resultSet);
+                    Apartment apartment = apartmentMapper.mapRow(resultSet);
                     optionalApartment = Optional.of(apartment);
                 }
             }
 
         } catch (SQLException e) {
-            logger.error("There was an error finding an apartment by id: " + apartmentId, e);
-            throw new DaoException("There was an error finding an apartment by id: " + apartmentId, e);
+            logger.error("There was an error finding an apartment by id.", e);
+            throw new DaoException("There was an error finding an apartment by id.", e);
         }
         return optionalApartment;
     }

@@ -24,7 +24,7 @@ public class ApartmentMapperImpl implements Mapper<Apartment> {
     }
 
     @Override
-    public Apartment mapResultSet(ResultSet resultSet) throws DaoException {
+    public Apartment mapRow(ResultSet resultSet) throws DaoException {
         try {
             Apartment apartment = Apartment.newBuilder()
                     .setId(resultSet.getLong(APARTMENT_ID))

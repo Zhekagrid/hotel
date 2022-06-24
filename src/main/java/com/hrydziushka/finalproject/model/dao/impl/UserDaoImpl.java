@@ -10,6 +10,7 @@ import com.hrydziushka.finalproject.util.PasswordEncryptor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.Optional;
 
 import static com.hrydziushka.finalproject.model.dao.ColumnName.*;
 
-public class UserDaoImpl implements BaseDao<User>,UserDao {
+public class UserDaoImpl implements BaseDao<User>, UserDao {
     private static final Logger logger = LogManager.getLogger();
     private static final String SELECT_USER_BY_LOGIN = """
             SELECT user_id, login, password, email
@@ -51,6 +52,7 @@ public class UserDaoImpl implements BaseDao<User>,UserDao {
             INSERT INTO users (login, email,balance, role_id, status_id) VALUES (?, ?,?, (SELECT role_id FROM roles WHERE role=?),
             (SELECT status_id FROM statuses WHERE status=?))
             """;
+    private static final String UPDATE_USER_BALANCE_BY_ID = "UPDATE users SET balance=? WHERE user_id=?";
     private static final String IS_USER_WITH_EMAIL_EXISTS = "SELECT EXISTS(SELECT login FROM users WHERE email = ?) AS user_exists";
     private static final String IS_USER_WITH_LOGIN_EXISTS = "SELECT EXISTS(SELECT login FROM users WHERE login = ?) AS user_exists";
 
@@ -74,18 +76,15 @@ public class UserDaoImpl implements BaseDao<User>,UserDao {
             statement.setString(5, user.getUserStatus().name().toLowerCase());
 
             statement.executeUpdate();
+
             try (ResultSet resultSet = statement.getGeneratedKeys()) {
-                if (resultSet.next()) {
-                    return resultSet.getLong(1);
-                } else {
-                    //todo ask
-                    throw new DaoException();
-                }
+                resultSet.next();
+                return resultSet.getLong(1);
             }
 
         } catch (SQLException e) {
-            logger.error("An error occurred when inserting a user into the database. User: " + user.toString(), e);
-            throw new DaoException("An error occurred when inserting a user into the database. User: " + user,e);
+            logger.error("An error occurred when inserting a user into the database.", e);
+            throw new DaoException("An error occurred when inserting a user into the database.", e);
 
         }
     }
@@ -106,14 +105,14 @@ public class UserDaoImpl implements BaseDao<User>,UserDao {
                 UserMapperImpl userMapperImpl = UserMapperImpl.getInstance();
                 while (resultSet.next()) {
 
-                    User user = userMapperImpl.mapResultSet(resultSet);
+                    User user = userMapperImpl.mapRow(resultSet);
                     userList.add(user);
 
                 }
             }
         } catch (SQLException e) {
-            logger.error("An error occurred when trying to find users in the interval. Offset: " + offset + " RowCount: " + rowCount, e);
-            throw new DaoException("An error occurred when trying to find users in the interval. Offset: " + offset + " RowCount: " + rowCount,e);
+            logger.error("An error occurred when trying to find users in the interval.", e);
+            throw new DaoException("An error occurred when trying to find users in the interval.", e);
         }
 
         return userList;
@@ -137,8 +136,8 @@ public class UserDaoImpl implements BaseDao<User>,UserDao {
                 return true;
             }
         } catch (SQLException e) {
-            logger.error("An error occurred when trying to update user's information. New user's information: " + user.toString(), e);
-            throw new DaoException("An error occurred when trying to update user's information. New user's information: " + user,e);
+            logger.error("An error occurred when trying to update user's information.", e);
+            throw new DaoException("An error occurred when trying to update user's information.", e);
 
         }
 
@@ -159,7 +158,7 @@ public class UserDaoImpl implements BaseDao<User>,UserDao {
                     boolean match = passwordEncryptor.checkPasswordMatching(password, hashPassFromDb);
                     if (match) {
                         UserMapperImpl userMapperImpl = UserMapperImpl.getInstance();
-                        User user = userMapperImpl.mapResultSet(resultSet);
+                        User user = userMapperImpl.mapRow(resultSet);
                         optionalUser = Optional.of(user);
                     }
 
@@ -169,8 +168,8 @@ public class UserDaoImpl implements BaseDao<User>,UserDao {
 
 
         } catch (SQLException e) {
-            logger.error("An error occurred when trying to authenticate a user by login and password. Login: " + login + " Password: " + password, e);
-            throw new DaoException("An error occurred when trying to authenticate a user by login and password. Login: " + login + " Password: " + password,e);
+            logger.error("An error occurred when trying to authenticate a user by login and password.", e);
+            throw new DaoException("An error occurred when trying to authenticate a user by login and password.", e);
         }
         return optionalUser;
     }
@@ -188,7 +187,7 @@ public class UserDaoImpl implements BaseDao<User>,UserDao {
 
         } catch (SQLException e) {
             logger.error("An error occurred while counting the number of users in the database", e);
-            throw new DaoException("An error occurred while counting the number of users in the database",e);
+            throw new DaoException("An error occurred while counting the number of users in the database", e);
 
         }
 
@@ -203,8 +202,8 @@ public class UserDaoImpl implements BaseDao<User>,UserDao {
             statement.setLong(2, userId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.error("An error occurred while trying to update the user password. User id: " + userId + "Hash password: " + hashPassword, e);
-            throw new DaoException("An error occurred while trying to update the user password. User id: " + userId + "Hash password: " + hashPassword,e);
+            logger.error("An error occurred while trying to update the user password.", e);
+            throw new DaoException("An error occurred while trying to update the user password.", e);
         }
     }
 
@@ -221,8 +220,8 @@ public class UserDaoImpl implements BaseDao<User>,UserDao {
             }
 
         } catch (SQLException e) {
-            logger.error("An error occurred while checking the database for the uniqueness of email: " + email, e);
-            throw new DaoException("An error occurred while checking the database for the uniqueness of email: " + email,e);
+            logger.error("An error occurred while checking the database for the uniqueness of email.", e);
+            throw new DaoException("An error occurred while checking the database for the uniqueness of email.", e);
 
         }
         return true;
@@ -238,15 +237,15 @@ public class UserDaoImpl implements BaseDao<User>,UserDao {
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     UserMapperImpl userMapper = UserMapperImpl.getInstance();
-                    User user = userMapper.mapResultSet(resultSet);
+                    User user = userMapper.mapRow(resultSet);
                     optionalUser = Optional.of(user);
 
                 }
             }
 
         } catch (SQLException e) {
-            logger.error("An error occurred when searching for a user with id:" + userId, e);
-            throw new DaoException("An error occurred when searching for a user with id:" + userId,e);
+            logger.error("An error occurred when searching for a user with id.", e);
+            throw new DaoException("An error occurred when searching for a user with id.", e);
         }
         return optionalUser;
     }
@@ -264,10 +263,25 @@ public class UserDaoImpl implements BaseDao<User>,UserDao {
             }
 
         } catch (SQLException e) {
-            logger.error("An error occurred while checking the database for the uniqueness of login: " + login, e);
-            throw new DaoException("An error occurred while checking the database for the uniqueness of login: " + login,e);
+            logger.error("An error occurred while checking the database for the uniqueness of login.", e);
+            throw new DaoException("An error occurred while checking the database for the uniqueness of login.", e);
 
         }
         return true;
+    }
+
+    @Override
+    public boolean updateUserBalanceById(BigDecimal newBalance, Long userId) throws DaoException {
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_USER_BALANCE_BY_ID)) {
+            statement.setBigDecimal(1, newBalance);
+            statement.setLong(2, userId);
+            int rows = statement.executeUpdate();
+            return rows > 0;
+        } catch (SQLException e) {
+            logger.error("An error occurred when trying to authenticate a user by login and password.", e);
+            throw new DaoException("An error occurred when trying to authenticate a user by login and password.", e);
+        }
+
     }
 }

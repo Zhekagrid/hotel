@@ -26,7 +26,7 @@ public class UserMapperImpl implements Mapper<User> {
     }
 
     @Override
-    public User mapResultSet(ResultSet resultSet) throws DaoException {
+    public User mapRow(ResultSet resultSet) throws DaoException {
 
         try {
             User user = User.newBuilder().setId(Long.valueOf(resultSet.getString(USER_ID)))
@@ -35,7 +35,7 @@ public class UserMapperImpl implements Mapper<User> {
                     .setPhoneNumber(resultSet.getString(PHONE_NUMBER))
                     .setBalance(resultSet.getBigDecimal(BALANCE))
                     .setUserRole(UserRole.valueOf(resultSet.getString(ROLE).toUpperCase()))
-                    .setUserStatus(UserStatus.valueOf(resultSet.getString(STATUS).toUpperCase()))
+                    .setUserStatus(UserStatus.valueOf(resultSet.getString(USER_STATUS).toUpperCase()))
                     .build();
             return user;
         } catch (SQLException e) {

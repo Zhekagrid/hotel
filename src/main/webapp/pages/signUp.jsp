@@ -40,10 +40,10 @@
         <div class="mb-3 col-12 col-md-4">
             <label for="exampleInputEmail1" class="form-label"><fmt:message key="signUp.email"/></label>
             <input type="text" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp"
-                value="${sessionScope.signUpFormData.email[0]}"   >
-            <c:if test="${sessionScope.signUpFormData.email[1] != null}">
+                value="${requestScope.signUpFormData.email[0]}"   >
+            <c:if test="${requestScope.signUpFormData.email[1] != null}">
                 <div class="text-danger">
-                    <fmt:message key="${sessionScope.signUpFormData.email[1]}"/>
+                    <fmt:message key="${requestScope.signUpFormData.email[1]}"/>
                 </div>
             </c:if>
 
@@ -53,20 +53,20 @@
         <div class="mb-3 col-12 col-md-4">
             <label for="exampleInputPassword1" class="form-label"><fmt:message key="signUp.password"/></label>
             <input type="password" class="form-control" name="password" id="exampleInputPassword1"
-                 value="${sessionScope.signUpFormData.password[0]}"  >
-            <c:if test="${sessionScope.signUpFormData.password[1] != null}">
+                 value="${requestScope.signUpFormData.password[0]}"  >
+            <c:if test="${requestScope.signUpFormData.password[1] != null}">
                 <div class="text-danger">
-                    <fmt:message key="${sessionScope.signUpFormData.password[1]}"/>
+                    <fmt:message key="${requestScope.signUpFormData.password[1]}"/>
                 </div>
             </c:if>
         </div>
         <div class="w-100"></div>
         <div class="mb-3 col-12 col-md-4">
             <label for="exampleInputPassword2" class="form-label"><fmt:message key="signUp.repeatPassword"/></label>
-            <input type="password" class="form-control" name="repeatPassword" id="exampleInputPassword2"value="${sessionScope.signUpFormData.repeatPassword[0]}">
-            <c:if test="${sessionScope.signUpFormData.repeatPassword[1] != null}" >
+            <input type="password" class="form-control" name="repeatPassword" id="exampleInputPassword2"value="${requestScope.signUpFormData.repeatPassword[0]}">
+            <c:if test="${requestScope.signUpFormData.repeatPassword[1] != null}" >
                 <div class="text-danger">
-                    <fmt:message key="${sessionScope.signUpFormData.repeatPassword[1]}"/>
+                    <fmt:message key="${requestScope.signUpFormData.repeatPassword[1]}"/>
                 </div>
             </c:if>
         </div>

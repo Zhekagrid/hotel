@@ -8,7 +8,7 @@ public final class ColumnName {
     public static final String PHONE_NUMBER = "phone_number";
     public static final String BALANCE = "balance";
     public static final String ROLE = "role";
-    public static final String STATUS = "status";
+    public static final String USER_STATUS = "status";
     public static final String USER_ID = "user_id";
     public static final String USERS_COUNT="users_count";
     public static final String USER_EXISTS ="user_exists";
@@ -25,6 +25,15 @@ public final class ColumnName {
     //images
     public static final String IMAGE = "image";
     public static final String IMAGE_ID = "image_id";
+
+
+    //orders
+    public static final String ORDER_ID="order_id";
+    public static final String DATE_FROM ="date_from";
+    public static final String DATE_TO ="date_to";
+    public static final String TOTAL_PRICE="total_price";
+    public static final String ORDER_STATUS="status";
+
 
 
     private ColumnName() {

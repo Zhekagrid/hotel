@@ -3,6 +3,7 @@ package com.hrydziushka.finalproject.model.dao;
 import com.hrydziushka.finalproject.exception.DaoException;
 import com.hrydziushka.finalproject.model.entity.User;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 public interface UserDao {
@@ -18,4 +19,6 @@ public interface UserDao {
     boolean userWithSpecificEmailExists(String email) throws DaoException;
 
     boolean userWithSpecificLoginExists(String login) throws DaoException;
+
+    boolean updateUserBalanceById(BigDecimal newBalance, Long userId) throws DaoException;
 }

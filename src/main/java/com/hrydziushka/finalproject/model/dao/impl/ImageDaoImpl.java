@@ -66,6 +66,7 @@ public class ImageDaoImpl  implements BaseDao<ApartmentImage>, ImageDao {
 
     @Override
     public Set<ApartmentImage> findAllApartmentImagesByApartmentId(Long apartmentId) throws DaoException {
+
         Set<ApartmentImage> apartmentImages = new HashSet<>();
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SELECT_ALL_APARTMENT_IMAGES_BY_APARTMENT_ID)) {
@@ -85,8 +86,8 @@ public class ImageDaoImpl  implements BaseDao<ApartmentImage>, ImageDao {
 
 
         } catch (SQLException | IOException e) {
-            logger.error("There was an error finding all the pictures of the apartment by the id of the apartment Apartment_id: " + apartmentId, e);
-            throw new DaoException("There was an error finding all the pictures of the apartment by the id of the apartment Apartment_id: " + apartmentId,e);
+            logger.error("There was an error finding all the pictures of the apartment by the id of the apartment." , e);
+            throw new DaoException("There was an error finding all the pictures of the apartment by the id of the apartment.",e);
         }
 
         return apartmentImages;

@@ -107,8 +107,8 @@ public class UserServiceImpl implements UserService {
             return UserDaoImpl.getInstance().userWithSpecificEmailExists(email);
 
         } catch (DaoException e) {
-            logger.error("An error occurred while checking the database for the uniqueness of email: " + email, e);
-            throw new ServiceException("An error occurred while checking the database for the uniqueness of email: " + email, e);
+            logger.error("An error occurred while checking the database for the uniqueness of email.", e);
+            throw new ServiceException("An error occurred while checking the database for the uniqueness of email.", e);
 
         }
 
@@ -120,8 +120,8 @@ public class UserServiceImpl implements UserService {
             return UserDaoImpl.getInstance().userWithSpecificLoginExists(login);
 
         } catch (DaoException e) {
-            logger.error("An error occurred while checking the database for the uniqueness of login: " + login, e);
-            throw new ServiceException("An error occurred while checking the database for the uniqueness of login: " + login, e);
+            logger.error("An error occurred while checking the database for the uniqueness of login.", e);
+            throw new ServiceException("An error occurred while checking the database for the uniqueness of login.", e);
 
         }
     }
@@ -146,8 +146,8 @@ public class UserServiceImpl implements UserService {
 
             return userDao.findUserById(id);
         } catch (DaoException e) {
-            logger.error("An error occurred when searching for a user with id:" + id, e);
-            throw new ServiceException("An error occurred when searching for a user with id:" + id, e);
+            logger.error("An error occurred when searching for a user with id.", e);
+            throw new ServiceException("An error occurred when searching for a user with id.", e);
 
         }
     }
@@ -162,8 +162,8 @@ public class UserServiceImpl implements UserService {
                 userStatus = UserStatus.valueOf(status);
                 userRole = UserRole.valueOf(role);
             } catch (IllegalArgumentException e) {
-                logger.error("An error occurred when trying to change a user's role or status. Incorrect role or status. Role: " + role + "Status: " + status, e);
-                throw new ServiceException("An error occurred when trying to change a user's role or status. Incorrect role or status. Role: " + role + "Status: " + status, e);
+                logger.error("An error occurred when trying to change a user's role or status. Incorrect role or status.", e);
+                throw new ServiceException("An error occurred when trying to change a user's role or status. Incorrect role or status.", e);
 
             }
             try {
@@ -181,8 +181,8 @@ public class UserServiceImpl implements UserService {
                 }
             } catch (DaoException e) {
 
-                logger.error("An error occurred when trying to change a user's role or status.  Role: " + role + "Status: " + status, e);
-                throw new ServiceException("An error occurred when trying to change a user's role or status.  Role: " + role + "Status: " + status, e);
+                logger.error("An error occurred when trying to change a user's role or status.", e);
+                throw new ServiceException("An error occurred when trying to change a user's role or status.", e);
 
             }
         }
